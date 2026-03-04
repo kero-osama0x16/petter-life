@@ -11,8 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) 
+        {
             $table->id();
+            // Custom foreign key name because the column is author_id, but the table is users
+            $table->foreignIdFor(\App\Models\User::class, 'author_id')->constrained('users')->cascadeOnDelete();
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->text('content');
+            $table->string('image_path')->nullable();
+            $table->string('category');
             $table->timestamps();
         });
     }

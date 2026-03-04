@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('medical_records', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Pet::class)->constrained()->cascadeOnDelete();
+            $table->enum('type', ['vaccination', 'medication', 'checkup']);
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->date('date');
+            //$table->string('attachment_path')->nullable();
             $table->timestamps();
         });
     }

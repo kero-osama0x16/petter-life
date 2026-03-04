@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('weight_logs', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Pet::class)->constrained()->cascadeOnDelete();
+            $table->decimal('weight', 5, 2); // Allows weights up to 999.99
+            $table->date('recorded_at');
             $table->timestamps();
         });
     }

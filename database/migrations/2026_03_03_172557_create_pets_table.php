@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('type'); // Dog, Cat, etc.
             $table->string('breed')->nullable();
             $table->string('gender');
             $table->date('birthday');
-            $table->string('photo_path')->nullable();
+            //$table->string('photo_path')->nullable();
             $table->text('personality')->nullable();
             $table->string('color')->nullable();
             $table->timestamps();

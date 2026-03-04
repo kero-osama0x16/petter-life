@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Pet::class)->constrained()->cascadeOnDelete();
+            $table->string('title');
+            $table->dateTime('remind_at');
+            $table->boolean('is_completed')->default(false);
             $table->timestamps();
         });
     }
