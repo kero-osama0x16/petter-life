@@ -17,7 +17,8 @@ class WeightLogFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'weight' => fake()->randomFloat(2, 1, 50),
+            'recorded_at' => fake()->date('Y-m-d'),
         ];
     }
 }

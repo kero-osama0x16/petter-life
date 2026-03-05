@@ -17,7 +17,9 @@ class ReminderFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence(),
+            'remind_at' => fake()->dateTime(),
+            'is_completed' => fake()->boolean(),
         ];
     }
 }

@@ -17,7 +17,10 @@ class MedicalRecordFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'type' => fake()->randomElement(['vaccination', 'checkup', 'medication']),
+            'title' => fake()->sentence(),
+            'description' => fake()->paragraph(),
+            'date' => fake()->date('Y-m-d'),
         ];
     }
 }
