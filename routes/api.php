@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\PetController; 
 use App\Http\Controllers\MedicalRecordController;
+use App\Http\Controllers\ReminderController;
 use App\Models\Pet;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/pets/{pet}/update', 'update'); 
         Route::delete('/pets/{pet}/delete', 'destroy'); 
     });
+
     // medical records
     Route::controller(MedicalRecordController::class)->group(function () 
     {
@@ -59,7 +61,19 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/medical-records/{record}/update', 'update');
         Route::delete('/medical-records/{record}/delete', 'destroy');
     });
+
     // reminders
+    Route::controller(ReminderController::class)->group(function () 
+    {
+        Route::get('/reminders', 'index');
+        Route::post('/reminders/store', 'store');
+        Route::get('/reminders/{reminder}', 'show');
+        Route::patch('/reminders/{reminder}/update', 'update');
+        Route::delete('/reminders/{reminder}/delete', 'destroy');
+        // Bonus route for the UI checkbox
+        Route::patch('/reminders/{reminder}/toggle-complete', 'toggleComplete'); 
+    });
+
     // services(map stuff)
     
 });
