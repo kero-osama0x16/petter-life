@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\PetController; 
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\ServiceController;
 use App\Models\Pet;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,20 @@ use Illuminate\Support\Facades\Gate;
 // ---------------------------
 // PUBLIC API ROUTES
 // ---------------------------
+
+// account management routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
+//service routes (for map stuff)
+Route::controller(ServiceController::class)->group(function () {
+    Route::get('/services', 'index'); 
+    Route::get('/services/nearby', 'nearby'); 
+    Route::get('/services/{service}', 'show');
+});
+
 
 
 // ---------------------------
