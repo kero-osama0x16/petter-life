@@ -2,8 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\PetController; 
+use App\Http\Controllers\MedicalRecordController;
 use App\Models\Pet;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -34,21 +36,29 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // ---------------------------
-    // PROTECTED API ROUTES
+    // PROTECTED API Controller ROUTES
     // ---------------------------
 
     // Pets
     Route::controller(PetController::class)->group(function () 
     {
         Route::get('/pets', 'index');
-        Route::get('/pets/create', 'create'); 
+        //Route::get('/pets/create', 'create'); 
         Route::post('/pets/store', 'store');
         Route::get('/pets/{pet}', 'show');
-        Route::get('/pets/{pet}/edit', 'edit'); 
+        //Route::get('/pets/{pet}/edit', 'edit'); 
         Route::patch('/pets/{pet}/update', 'update'); 
         Route::delete('/pets/{pet}/delete', 'destroy'); 
     });
     // medical records
+    Route::controller(MedicalRecordController::class)->group(function () 
+    {
+        Route::get('/medical-records', 'index');
+        Route::post('/medical-records/store', 'store');
+        Route::get('/medical-records/{record}', 'show');
+        Route::patch('/medical-records/{record}/update', 'update');
+        Route::delete('/medical-records/{record}/delete', 'destroy');
+    });
     // reminders
     // services(map stuff)
     

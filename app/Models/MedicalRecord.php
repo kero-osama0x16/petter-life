@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia; 
 use Spatie\MediaLibrary\InteractsWithMedia; 
 
-class MedicalRecord extends Model
+
+
+class MedicalRecord extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\MedicalRecordFactory> */
     use HasFactory, InteractsWithMedia;
