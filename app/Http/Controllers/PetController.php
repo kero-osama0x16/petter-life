@@ -60,7 +60,8 @@ class PetController extends Controller
             'gender' => ['required','in:male,female'],
             'age' =>['required','numeric','min:0'],
             'birthday' => ['required', 'date'],
-            'personality' =>['required', 'min:3'],
+            'personality' => ['required', 'array', 'min:1'],
+            'personality.*' => ['required', 'string', 'in:friendly,energetic,calm,playful,affectionate,smart,shy,brave'],
             'color' => ['required', 'min:3'],
             'photo' => ['nullable', 'image', 'max:5120'],
         ]);
@@ -92,7 +93,9 @@ class PetController extends Controller
                 'pet' => $pet->load('media'),
             ], 201);
         }
-        
+        /*
+        TODO
+        dublicate investigate 
         if($request->wantsJson()) 
         {
             // return json response with the created pet data
@@ -101,6 +104,7 @@ class PetController extends Controller
                 'pet' => $pet,
             ], 201);
         } 
+        */
         else 
         {
             // redirect to the pet index page with success message
@@ -133,7 +137,8 @@ class PetController extends Controller
                 'gender' => ['required','in:male,female'],
                 'age' =>['required','numeric','min:0'],
                 'birthday' => ['required', 'date'],
-                'personality' =>['required', 'min:3'],
+                'personality' => ['required', 'array', 'min:1'],
+                'personality.*' => ['required', 'string', 'in:friendly,energetic,calm,playful,affectionate,smart,shy,brave'],
                 'color' => ['required', 'min:3'],
             ]);
         // Logic to update an existing pet

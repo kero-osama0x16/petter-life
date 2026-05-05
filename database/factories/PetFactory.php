@@ -22,7 +22,10 @@ class PetFactory extends Factory
             'breed' => fake()->word(),
             'gender' => fake()->randomElement(['male', 'female']),
             'birthday' => fake()->date('Y-m-d'),
-            'personality' => fake()->sentence(),
+            'personality' => fake()->randomElements(
+            ['friendly', 'energetic', 'calm', 'playful', 'affectionate', 'smart', 'shy', 'brave'],
+            fake()->numberBetween(1, 4)
+            ),
             'color' => fake()->colorName(),
         ];
     }

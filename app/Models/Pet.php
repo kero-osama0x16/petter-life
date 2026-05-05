@@ -21,6 +21,7 @@ class Pet extends Model implements HasMedia
     {
         return [
             'birthday' => 'date',
+            'personality' => 'array',
         ];
     }
 

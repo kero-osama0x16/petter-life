@@ -119,10 +119,10 @@ class AuthController extends Controller
 
         $validated = $request->validate([
             'phone_number' => 'required|string',
-            'governorate'  => 'required|string',
+            //'governorate'  => 'required|string',
             'city'         => 'required|string',
             'birthday'     => 'required|date',
-            'gender'       => 'required|in:male,female',
+            //'gender'       => 'required|in:male,female',
         ]);
 
         $user->update($validated);
