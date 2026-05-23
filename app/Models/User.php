@@ -61,4 +61,52 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class, 'author_id');
     }
+
+    // Community feature relationships
+    public function communityListings()
+    {
+        return $this->hasMany(CommunityListing::class);
+    }
+
+    /**
+     * Get adoption/breeding requests sent BY this user (requester).
+     */
+    public function sentAdoptionRequests()
+    {
+        return $this->hasMany(AdoptionRequest::class, 'requester_id');
+    }
+
+    /**
+     * Get adoption/breeding requests received BY this user (pet owner).
+     */
+    public function receivedAdoptionRequests()
+    {
+        return $this->hasMany(AdoptionRequest::class, 'pet_owner_id');
+    }
+
+    /**
+     * Get all pending requests received by this user.
+     */
+    public function getPendingReceivedRequests()
+    {
+        return $this->receivedAdoptionRequests()->where('status', 'pending')->get();
+    }
+
+    /**
+     * Get all accepted exchanges for this user (sent + received).
+     */
+    public function getAcceptedExchanges()
+    {
+        $sent = $this->sentAdoptionRequests()
+            ->where('status', 'accepted')
+            ->with('contactExchange')
+            ->get();
+
+        $received = $this->receivedAdoptionRequests()
+            ->where('status', 'accepted')
+            ->with('contactExchange')
+            ->get();
+
+        return $sent->merge($received);
+    }
 }

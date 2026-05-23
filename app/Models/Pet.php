@@ -45,4 +45,53 @@ class Pet extends Model implements HasMedia
     {
         return $this->hasMany(Reminder::class);
     }
+
+    // Community feature relationships
+    public function communityListings()
+    {
+        return $this->hasMany(CommunityListing::class);
+    }
+
+    public function adoptionRequests()
+    {
+        return $this->hasMany(AdoptionRequest::class);
+    }
+
+    /**
+     * Get all active community listings for this pet.
+     */
+    public function getActiveListings()
+    {
+        return $this->communityListings()->where('is_active', true)->get();
+    }
+
+    /**
+     * Check if pet is listed for adoption.
+     */
+    public function isListedForAdoption(): bool
+    {
+        return $this->communityListings()
+            ->where('listing_type', 'adoption')
+            ->where('is_active', true)
+            ->exists();
+    }
+
+    /**
+     * Check if pet is listed for breeding.
+     */
+    public function isListedForBreeding(): bool
+    {
+        return $this->communityListings()
+            ->where('listing_type', 'breeding')
+            ->where('is_active', true)
+            ->exists();
+    }
+
+    /**
+     * Get pending adoption/breeding requests for this pet.
+     */
+    public function getPendingRequests()
+    {
+        return $this->adoptionRequests()->where('status', 'pending')->get();
+    }
 }

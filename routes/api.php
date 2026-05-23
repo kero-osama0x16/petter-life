@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CommunityListingController;
+use App\Http\Controllers\Api\AdoptionRequestController;
 use App\Http\Controllers\PetController; 
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\ReminderController;
@@ -31,6 +33,12 @@ Route::controller(ServiceController::class)->group(function () {
     Route::get('/services/{service}', 'show');
 });
 
+// Community listings - public browsing
+Route::controller(CommunityListingController::class)->group(function () {
+    Route::get('/community/pets', 'index');
+    Route::get('/community/pets/{petId}', 'show');
+});
+
 
 
 // ---------------------------
@@ -43,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // ---------------------------
     Route::post('/profile/complete', [AuthController::class, 'completeProfile']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::delete('/remove-profile', [AuthController::class, 'destroy']);
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
@@ -83,6 +92,22 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/reminders/{reminder}/delete', 'destroy');
         // Bonus route for the UI checkbox
         Route::patch('/reminders/{reminder}/toggle-complete', 'toggleComplete'); 
+    });
+
+    // Community listings - protected listing management
+    Route::controller(CommunityListingController::class)->group(function () {
+        Route::post('/community/pets/{pet}', 'store');
+        Route::delete('/community/pets/{pet}', 'destroy');
+    });
+
+    // Adoption/Breeding Requests - protected
+    Route::controller(AdoptionRequestController::class)->group(function () {
+        Route::post('/adoption-requests', 'store');
+        Route::get('/adoption-requests', 'index');
+        Route::get('/adoption-requests/{request}', 'show');
+        Route::patch('/adoption-requests/{request}', 'update');
+        Route::delete('/adoption-requests/{request}', 'destroy');
+        Route::get('/adoption-requests/{request}/contact', 'getContact');
     });
 
     // services(map stuff)

@@ -140,4 +140,21 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Logged out successfully']);
     }
+
+
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+
+        $user->tokens()->delete();
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Account deleted successfully',
+        ]);
+    }
 }
