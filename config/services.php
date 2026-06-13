@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'google_maps' => [
+        'key' => env('GOOGLE_MAPS_API_KEY'),
+        'base_uri' => env('GOOGLE_MAPS_BASE_URI', 'https://maps.googleapis.com/maps/api'),
+        'timeout' => env('GOOGLE_MAPS_TIMEOUT', 5),
+        'connect_timeout' => env('GOOGLE_MAPS_CONNECT_TIMEOUT', 2),
+    ],
+
 ];
