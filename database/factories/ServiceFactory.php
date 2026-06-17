@@ -18,7 +18,7 @@ class ServiceFactory extends Factory
     {
         return [
             'name' => fake()->company(),
-            'type' => fake()->randomElement(['vet', 'groomer', 'trainer', 'shelter']),
+            'type' => fake()->randomElement(['vet', 'pharmacy', 'groomer', 'boarding', 'dog_park', 'pet_shop']),
             'lat' => fake()->latitude(),
             'long' => fake()->longitude(),
             'address' => fake()->address(),
